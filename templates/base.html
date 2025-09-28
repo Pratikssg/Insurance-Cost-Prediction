@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MLOps Project{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="navbar-brand">🚀 MLOps Demo</a>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="/" class="nav-link {% if page == 'home' %}active{% endif %}">Home</a></li>
+                <li class="nav-item"><a href="/predictor" class="nav-link {% if page == 'predictor' %}active{% endif %}">Predictor</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link {% if page == 'about' %}active{% endif %}">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+        <p>A demonstration of a full-stack Machine Learning application.</p>
+    </footer>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

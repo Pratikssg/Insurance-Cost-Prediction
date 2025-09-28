@@ -1,0 +1,96 @@
+/* --- General Setup & Design System --- */
+:root {
+    --primary-color: #007bff;
+    --primary-hover: #0069d9;
+    --success-color: #28a745;
+    --success-hover: #218838;
+    --error-color: #dc3545;
+    --light-bg: #f8f9fa;
+    --dark-text: #212529;
+    --muted-text: #6c757d;
+    --card-bg: #ffffff;
+    --border-color: #dee2e6;
+    --border-radius: 0.75rem;
+    --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease-in-out;
+}
+
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+    line-height: 1.7;
+}
+
+h1, h2, h3 { font-weight: 600; line-height: 1.2; }
+a { color: var(--primary-color); text-decoration: none; }
+
+/* --- Navigation Bar --- */
+.navbar {
+    background-color: var(--white-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    padding: 0 2rem;
+    position: sticky; top: 0; z-index: 1000;
+}
+.nav-container {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1200px; margin: 0 auto; height: 70px;
+}
+.navbar-brand {
+    font-size: 1.4em; font-weight: 700; color: var(--dark-text);
+    text-decoration: none; display: flex; align-items: center;
+}
+.nav-links { list-style: none; display: flex; margin: 0; padding: 0; }
+.nav-item { margin-left: 35px; }
+.nav-link {
+    text-decoration: none; color: var(--muted-text); font-weight: 500;
+    padding: 1.5rem 0; position: relative; transition: var(--transition);
+}
+.nav-link::after {
+    content: ''; position: absolute; width: 0; height: 3px;
+    bottom: 20px; left: 50%; transform: translateX(-50%);
+    background-color: var(--primary-color); transition: var(--transition);
+}
+.nav-link:hover, .nav-link.active { color: var(--dark-text); }
+.nav-link.active::after { width: 100%; }
+
+/* --- Main Content & Cards --- */
+.container { max-width: 1024px; margin: 50px auto; padding: 0 1rem; }
+.card {
+    background: var(--white-color); border-radius: var(--border-radius);
+    box-shadow: var(--shadow); padding: 2.5rem; margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+.section-title { text-align: center; font-size: 2.5em; margin-bottom: 3rem; }
+
+/* --- Animations --- */
+.fade-in { animation: fadeIn 0.8s ease-out forwards; }
+.slide-in-up { animation: slideInUp 0.8s ease-out forwards; opacity: 0; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- Form & Button Elements --- */
+.form-group { margin-bottom: 1.25rem; }
+label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--muted-text); }
+input, select {
+    width: 100%; padding: 12px 15px; border-radius: var(--border-radius);
+    border: 1px solid var(--border-color); box-sizing: border-box;
+    font-size: 1rem; font-family: inherit; transition: var(--transition);
+}
+input:focus, select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+button {
+    width: 100%; padding: 15px; background-color: var(--primary-color);
+    color: white; border: none; border-radius: 50px; font-size: 1.1rem;
+    font-weight: 600; cursor: pointer; margin-top: 1.5rem;
+    transition: var(--transition); letter-spacing: 0.5px;
+}
+button:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+button:disabled { background-color: var(--muted-text); cursor: not-allowed; }
+
+/* --- Footer --- */
+.footer { text-align: center; margin-top: 50px; padding: 30px; color: var(--muted-text); background-color: #e9ecef; }

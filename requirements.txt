@@ -1,0 +1,8 @@
+pandas
+scikit-learn
+mlflow
+fastapi
+uvicorn[standard]
+boto3  # For AWS interaction in deploy.py
+joblib
+python-dotenv

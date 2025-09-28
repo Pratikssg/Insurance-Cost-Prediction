@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block content %}
+<div class="card fade-in">
+    <h1 style="text-align:center; margin-bottom: 2rem;">About This Project</h1>
+    <p>This project is a demonstration of an end-to-end Machine Learning Operations (MLOps) workflow, designed to be reproducible, scalable, and maintainable.</p>
+    <h3 style="margin-top: 2rem;">Key Technologies Used:</h3>
+    <ul>
+        <li><strong>Machine Learning:</strong> Python with Scikit-Learn for model training (Random Forest Regressor) and a robust preprocessing pipeline.</li>
+        <li><strong>Backend API:</strong> A high-performance API built with FastAPI, using Pydantic for data validation.</li>
+        <li><strong>Containerization:</strong> Docker for packaging the entire application and its dependencies into a portable image.</li>
+        <li><strong>Cloud Deployment:</strong> Amazon Web Services (AWS), using ECR to store the Docker image and EC2 to host the live application.</li>
+    </ul>
+</div>
+{% endblock %}

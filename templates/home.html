@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Homepage | MLOps Demo{% endblock %}
+{% block content %}
+<div class="card fade-in" style="text-align: center;">
+    <h1 style="font-size: 2.8em;">Welcome to the MLOps Demo</h1>
+    <p style="font-size: 1.2em; color: var(--muted-text);">This project demonstrates the full lifecycle of a machine learning model, from training to a live, deployed web application.</p>
+    <a href="/predictor" style="display: inline-block; padding: 14px 35px; background: var(--primary-color); color: white; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1em; margin-top: 1.5rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);">Try the Predictor</a>
+</div>
+{% endblock %}

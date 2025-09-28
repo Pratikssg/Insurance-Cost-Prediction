@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Cost Predictor{% endblock %}
+
+{% block content %}
+<div class="card fade-in">
+    <h1 style="text-align:center; margin-bottom: 2rem;">Insurance Cost Predictor</h1>
+    <form id="prediction-form">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" value="30" required>
+            </div>
+            <div class="form-group">
+                <label for="bmi">BMI</label>
+                <input type="number" step="0.1" id="bmi" name="bmi" value="29.5" required>
+            </div>
+            <div class="form-group">
+                <label for="children">Children</label>
+                <input type="number" id="children" name="children" value="1" required>
+            </div>
+             <div class="form-group">
+                <label for="sex">Sex</label>
+                <select id="sex" name="sex"><option value="male">Male</option><option value="female">Female</option></select>
+            </div>
+             <div class="form-group" style="grid-column: 1 / -1;">
+                <label for="smoker">Are you a smoker?</label>
+                <select id="smoker" name="smoker"><option value="no">No</option><option value="yes">Yes</option></select>
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+                <label for="region">Region</label>
+                <select id="region" name="region"><option value="southwest">Southwest</option><option value="southeast">Southeast</option><option value="northwest">Northwest</option><option value="northeast">Northeast</option></select>
+            </div>
+        </div>
+        <button type="submit" id="submit-button">Predict Cost</button>
+    </form>
+    <div id="result-container" style="margin-top: 2rem; display: none; animation: fadeIn 0.5s ease; padding: 25px; border-radius: var(--border-radius); text-align: center; font-size: 1.2em; font-weight: 500;">
+        <p id="result-text" style="margin: 0;"></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('prediction-form').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const submitButton = document.getElementById('submit-button');
+        const resultContainer = document.getElementById('result-container');
+        const resultText = document.getElementById('result-text');
+
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
+        data.age = parseInt(data.age);
+        data.bmi = parseFloat(data.bmi);
+        data.children = parseInt(data.children);
+
+        // UX: Show loading state
+        submitButton.disabled = true;
+        submitButton.innerText = 'Calculating...';
+        resultContainer.style.display = 'block';
+        resultContainer.style.backgroundColor = '#fff3cd'; // Loading color
+        resultText.innerText = 'Please wait while we calculate your estimate.';
+
+        try {
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                resultContainer.style.backgroundColor = '#d4edda'; // Success color
+                resultText.innerHTML = `Estimated Annual Cost: <strong style="font-size: 1.8em; font-weight: 700; display: block; margin-top: 5px;">$${result.predicted_charge}</strong>`;
+            } else {
+                // Try to parse detailed error from FastAPI
+                let errorMessage = 'An unknown error occurred.';
+                if (result.detail && Array.isArray(result.detail)) {
+                    errorMessage = result.detail.map(err => `${err.loc[1]}: ${err.msg}`).join(', ');
+                } else if (result.detail) {
+                    errorMessage = result.detail;
+                }
+                throw new Error(errorMessage);
+            }
+        } catch (error) {
+            resultContainer.style.backgroundColor = '#f8d7da'; // Error color
+            resultText.innerText = `Error: ${error.message}`;
+        } finally {
+            submitButton.disabled = false;
+            submitButton.innerText = 'Predict Cost';
+        }
+    });
+</script>
+{% endblock %}
